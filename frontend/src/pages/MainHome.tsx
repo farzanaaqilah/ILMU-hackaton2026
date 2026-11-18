@@ -8,7 +8,7 @@ export const MainHome: React.FC = () => {
         <div style={styles.heroOverlay}>
           <div style={styles.heroBadge}>✨ Fresh From The Oven Every Morning</div>
           <h1 style={styles.heroTitle}>
-            Farzana Bakes, <br />
+            amirul Bakes, <br />
             <span style={{ color: '#d97706' }}>Baked with Love.</span>
           </h1>
           <p style={styles.heroSubtitle}>
@@ -69,7 +69,7 @@ export const MainHome: React.FC = () => {
 
             <div style={styles.featureCard}>
               <div style={styles.iconWrapper}>⏰</div>
-              <h3 style={styles.cardTitle}>Natural Wild Starter</h3>
+              <h3 style={styles.cardTitle}>abccccccc</h3>
               <p style={styles.cardText}>
                 Naturally fermented using our 12-year-old sourdough starter, yielding tender crumb, easier digestion, and complex taste.
               </p>
