@@ -1,363 +1,338 @@
 import React from 'react';
+import Button from '../components/button';
+
+const medicines = [
+  { name: 'Vitamin D', detail: '1 tablet · After breakfast', time: '8:00 AM', status: 'Taken' },
+  { name: 'Blood pressure medicine', detail: '1 tablet · With water', time: '1:00 PM', status: 'Upcoming' },
+  { name: 'Evening medicine', detail: '1 capsule · After dinner', time: '8:00 PM', status: 'Upcoming' },
+];
 
 export const MainHome: React.FC = () => {
   return (
     <div style={styles.page}>
-      {/* ─── SECTION 1: HERO / LANDING PAGE ─── */}
-      <section style={styles.heroSection}>
-        <div style={styles.heroOverlay}>
-          <div style={styles.heroBadge}>✨ Fresh From The Oven Every Morning</div>
-          <h1 style={styles.heroTitle}>
-            amirul Bakes, <br />
-            <span style={{ color: '#d97706' }}>Baked with Love.</span>
-          </h1>
-          <p style={styles.heroSubtitle}>
-            Handcrafted sourdough, golden flaky croissants, and delicate pastries baked fresh daily using traditional fermentation methods and organic grains.
-          </p>
-          <div style={styles.heroButtonGroup}>
-            <a href="#features" style={styles.btnPrimary}>Explore Menu</a>
-            <a href="#testimony" style={styles.btnSecondary}>Read Reviews</a>
-          </div>
-
-          {/* Quick highlights bar */}
-          <div style={styles.heroStats}>
-            <div>
-              <span style={styles.statNumber}>100%</span>
-              <span style={styles.statLabel}>Organic Flour</span>
-            </div>
-            <div style={styles.statDivider} />
-            <div>
-              <span style={styles.statNumber}>36 hrs</span>
-              <span style={styles.statLabel}>Slow Ferment</span>
-            </div>
-            <div style={styles.statDivider} />
-            <div>
-              <span style={styles.statNumber}>05:00 AM</span>
-              <span style={styles.statLabel}>Daily First Bake</span>
-            </div>
-          </div>
+      <header style={styles.header}>
+        <a href="#" style={styles.brand}>
+          <span style={styles.brandIcon}>✚</span>
+          <span>Medi<span style={styles.brandAccent}>Care</span></span>
+        </a>
+        <nav style={styles.nav}>
+          <a href="#overview" style={styles.navLink}>Overview</a>
+          <a href="#medicines" style={styles.navLink}>My Medicines</a>
+          <a href="#assistant" style={styles.navLink}>AI Assistant</a>
+        </nav>
+        <div style={styles.profile}>
+          <div style={styles.avatar}>JD</div>
+          <span style={styles.profileName}>Jamie Davis</span>
         </div>
-      </section>
+      </header>
 
-      {/* ─── SECTION 2: FEATURES / WHAT MAKES US SPECIAL ─── */}
-      <section id="features" style={styles.featuresSection}>
-        <div style={styles.container}>
-          <div style={styles.sectionHeader}>
-            <span style={styles.sectionTag}>OUR CRAFT</span>
-            <h2 style={styles.sectionTitle}>Why Choose Our Bakery?</h2>
-            <p style={styles.sectionDesc}>
-              We don't take shortcuts. Every single loaf and pastry tells a story of patience, passion, and premium ingredients.
+      <main style={styles.main}>
+        <section id="overview" style={styles.welcome}>
+          <div>
+            <p style={styles.eyebrow}>PATIENT DASHBOARD</p>
+            <h1 style={styles.title}>Good morning, Jamie 👋</h1>
+            <p style={styles.subtitle}>Here’s your medication plan for today.</p>
+          </div>
+          <div style={styles.dateBadge}>Your health, one day at a time</div>
+        </section>
+
+        <section style={styles.statsGrid} aria-label="Medication summary">
+          <div style={styles.statCard}>
+            <div style={styles.statIcon}>💊</div>
+            <p style={styles.statLabel}>Medicines today</p>
+            <p style={styles.statValue}>3 <span style={styles.statNote}>scheduled</span></p>
+          </div>
+          <div style={styles.statCard}>
+            <div style={styles.statIcon}>✅</div>
+            <p style={styles.statLabel}>Taken today</p>
+            <p style={styles.statValue}>1 <span style={styles.statNote}>of 3 doses</span></p>
+          </div>
+          <div style={styles.statCard}>
+            <div style={styles.statIcon}>⏰</div>
+            <p style={styles.statLabel}>Next reminder</p>
+            <p style={styles.statValue}>1:00 <span style={styles.statNote}>PM</span></p>
+          </div>
+        </section>
+
+        <div style={styles.contentGrid}>
+          <section id="medicines" style={styles.panel}>
+            <div style={styles.panelHeading}>
+              <div>
+                <h2 style={styles.panelTitle}>Today’s medications</h2>
+                <p style={styles.panelSubtitle}>Keep track of your daily doses.</p>
+              </div>
+              <a href="#medicines" style={styles.textLink}>View schedule →</a>
+            </div>
+
+            <div style={styles.medicineList}>
+              {medicines.map((medicine) => (
+                <article key={medicine.name} style={styles.medicineRow}>
+                  <div style={styles.medicineIcon}>💊</div>
+                  <div style={styles.medicineInfo}>
+                    <h3 style={styles.medicineName}>{medicine.name}</h3>
+                    <p style={styles.medicineDetail}>{medicine.detail}</p>
+                  </div>
+                  <div style={styles.medicineTime}>{medicine.time}</div>
+                  <span
+                    style={{
+                      ...styles.status,
+                      ...(medicine.status === 'Taken' ? styles.takenStatus : styles.upcomingStatus),
+                    }}
+                  >
+                    {medicine.status}
+                  </span>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <aside id="assistant" style={styles.assistantCard}>
+            <div style={styles.assistantIcon}>✦</div>
+            <p style={styles.assistantLabel}>AI MEDICATION ASSISTANT</p>
+            <h2 style={styles.assistantTitle}>A little reminder for you</h2>
+            <p style={styles.assistantText}>
+              Have you taken your blood pressure medicine today?
             </p>
-          </div>
-
-          <div style={styles.grid3}>
-            <div style={styles.featureCard}>
-              <div style={styles.iconWrapper}>🌾</div>
-              <h3 style={styles.cardTitle}>Stone-Milled Organic Flour</h3>
-              <p style={styles.cardText}>
-                Locally sourced unbleached wheat milled slowly to keep all natural nutrients, aroma, and rich flavor intact.
-              </p>
+            <div style={styles.assistantPrompt}>
+              Your next scheduled dose is at <strong>1:00 PM</strong>. Remember to follow
+              the instructions provided by your healthcare professional.
             </div>
-
-            <div style={styles.featureCard}>
-              <div style={styles.iconWrapper}>🥐</div>
-              <h3 style={styles.cardTitle}>Pure Normandy Butter</h3>
-              <p style={styles.cardText}>
-                Layered meticulously by hand to achieve feather-light, crispy laminations and unforgettable flaky textures.
-              </p>
+            <div style={styles.assistantActions}>
+              <button type="button" style={styles.primaryButton}>Yes, I have</button>
+              <button type="button" style={styles.secondaryButton}>Not yet</button>
             </div>
-
-            <div style={styles.featureCard}>
-              <div style={styles.iconWrapper}>⏰</div>
-              <h3 style={styles.cardTitle}>abccccccc</h3>
-              <p style={styles.cardText}>
-                Naturally fermented using our 12-year-old sourdough starter, yielding tender crumb, easier digestion, and complex taste.
-              </p>
-            </div>
-          </div>
+          </aside>
         </div>
-      </section>
 
-      {/* ─── SECTION 3: TESTIMONY / CUSTOMER REVIEWS ─── */}
-      <section id="testimony" style={styles.testimonySection}>
-        <div style={styles.container}>
-          <div style={styles.sectionHeader}>
-            <span style={styles.sectionTag}>COMMUNITY LOVE</span>
-            <h2 style={styles.sectionTitle}>What Our Patrons Say</h2>
-            <p style={styles.sectionDesc}>
-              Hear from our regular morning coffee-and-pastry lovers and sourdough enthusiasts.
-            </p>
+        <section style={styles.progressPanel}>
+          <div>
+            <p style={styles.eyebrow}>DAILY PROGRESS</p>
+            <h2 style={styles.progressTitle}>You’re building a healthy routine</h2>
+            <p style={styles.panelSubtitle}>You’ve completed 1 of your 3 scheduled doses today.</p>
           </div>
-
-          <div style={styles.grid3}>
-            <div style={styles.testimonialCard}>
-              <div style={styles.stars}>★★★★★</div>
-              <p style={styles.testimonialQuote}>
-                "The almond croissant here ruined all other bakeries for me. Perfectly balanced sweetness with the crispest layers imaginable."
-              </p>
-              <div style={styles.userProfile}>
-                <div style={styles.avatar}>SA</div>
-                <div>
-                  <h4 style={styles.userName}>Sarah Adams</h4>
-                  <p style={styles.userRole}>Pastry Enthusiast</p>
-                </div>
-              </div>
+          <div style={styles.progressWrap}>
+            <div style={styles.progressTrack}>
+              <div style={styles.progressFill} />
             </div>
-
-            <div style={styles.testimonialCard}>
-              <div style={styles.stars}>★★★★★</div>
-              <p style={styles.testimonialQuote}>
-                "Their country sourdough has the perfect crust and an airy, chewy crumb. I pick up two loaves every single Saturday morning without fail."
-              </p>
-              <div style={styles.userProfile}>
-                <div style={styles.avatar}>MK</div>
-                <div>
-                  <h4 style={styles.userName}>Marcus Kim</h4>
-                  <p style={styles.userRole}>Home Chef & Local Resident</p>
-                </div>
-              </div>
-            </div>
-
-            <div style={styles.testimonialCard}>
-              <div style={styles.stars}>★★★★★</div>
-              <p style={styles.testimonialQuote}>
-                "Not only are the cinnamon buns heavenly, but walking in smells like absolute comfort. The staff treat everyone like family."
-              </p>
-              <div style={styles.userProfile}>
-                <div style={styles.avatar}>EL</div>
-                <div>
-                  <h4 style={styles.userName}>Elena Lopez</h4>
-                  <p style={styles.userRole}>Coffee & Brunch Lover</p>
-                </div>
-              </div>
-            </div>
+            <span style={styles.progressPercent}>33%</span>
           </div>
-        </div>
-      </section>
+        </section>
+
+        <footer style={styles.footer}>
+          This dashboard is for medication organization and reminders. For medical advice,
+          consult your healthcare professional.
+        </footer>
+      </main>
     </div>
   );
 };
 
 export default MainHome;
 
-// ─── STYLES (Modern Warm Artisan Theme) ───
 const styles: Record<string, React.CSSProperties> = {
   page: {
+    minHeight: '100vh',
+    backgroundColor: '#f5f8fc',
+    color: '#1e293b',
     fontFamily: "'Segoe UI', Roboto, Helvetica, sans-serif",
-    color: '#292524',
-    backgroundColor: '#fffdf9',
-    lineHeight: 1.6,
-    margin: 0,
-    padding: 0,
   },
-  container: {
-    maxWidth: '1120px',
-    margin: '0 auto',
-    padding: '0 24px',
-  },
-
-  /* Hero Section */
-  heroSection: {
-    background: 'linear-gradient(135deg, #fef3c7 0%, #fffbeb 50%, #fed7aa 100%)',
-    padding: '90px 24px 80px',
-    textAlign: 'center',
-    position: 'relative',
-    borderBottom: '1px solid #fde68a',
-  },
-  heroOverlay: {
-    maxWidth: '780px',
-    margin: '0 auto',
-  },
-  heroBadge: {
-    display: 'inline-block',
-    backgroundColor: '#fef08a',
-    color: '#854d0e',
-    fontSize: '0.875rem',
-    fontWeight: '600',
-    padding: '6px 16px',
-    borderRadius: '9999px',
-    marginBottom: '20px',
-  },
-  heroTitle: {
-    fontSize: '3rem',
-    fontWeight: '800',
-    letterSpacing: '-0.025em',
-    color: '#451a03',
-    lineHeight: 1.15,
-    margin: '0 0 20px',
-  },
-  heroSubtitle: {
-    fontSize: '1.15rem',
-    color: '#78350f',
-    marginBottom: '36px',
-    maxWidth: '640px',
-    marginInline: 'auto',
-  },
-  heroButtonGroup: {
+  header: {
+    minHeight: '72px',
+    padding: '0 6%',
     display: 'flex',
-    gap: '14px',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    marginBottom: '50px',
-  },
-  btnPrimary: {
-    backgroundColor: '#b45309',
-    color: '#ffffff',
-    textDecoration: 'none',
-    fontWeight: '600',
-    padding: '12px 28px',
-    borderRadius: '8px',
-    boxShadow: '0 4px 10px rgba(180, 83, 9, 0.25)',
-  },
-  btnSecondary: {
-    backgroundColor: 'transparent',
-    color: '#78350f',
-    textDecoration: 'none',
-    fontWeight: '600',
-    padding: '12px 28px',
-    borderRadius: '8px',
-    border: '2px solid #b45309',
-  },
-  heroStats: {
-    display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
-    gap: '30px',
-    marginTop: '20px',
-    paddingTop: '30px',
-    borderTop: '1px solid rgba(217, 119, 6, 0.2)',
-  },
-  statNumber: {
-    display: 'block',
-    fontSize: '1.25rem',
-    fontWeight: '700',
-    color: '#78350f',
-  },
-  statLabel: {
-    fontSize: '0.8rem',
-    color: '#92400e',
-    textTransform: 'uppercase',
-  },
-  statDivider: {
-    width: '1px',
-    height: '32px',
-    backgroundColor: '#fcd34d',
-  },
-
-  /* Common Headers */
-  sectionHeader: {
-    textAlign: 'center',
-    marginBottom: '50px',
-  },
-  sectionTag: {
-    color: '#b45309',
-    fontSize: '0.85rem',
-    fontWeight: '700',
-    letterSpacing: '0.1em',
-    textTransform: 'uppercase',
-  },
-  sectionTitle: {
-    fontSize: '2.25rem',
-    color: '#451a03',
-    fontWeight: '700',
-    margin: '8px 0 12px',
-  },
-  sectionDesc: {
-    color: '#78716c',
-    fontSize: '1.05rem',
-    maxWidth: '560px',
-    margin: '0 auto',
-  },
-
-  /* Grid Layout */
-  grid3: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: '28px',
-  },
-
-  /* Features Section */
-  featuresSection: {
-    padding: '90px 0',
-    backgroundColor: '#ffffff',
-  },
-  featureCard: {
-    backgroundColor: '#fffdfa',
-    border: '1px solid #f5ebe0',
-    borderRadius: '14px',
-    padding: '32px 24px',
-    textAlign: 'center',
-  },
-  iconWrapper: {
-    fontSize: '2.5rem',
-    marginBottom: '16px',
-    lineHeight: 1,
-  },
-  cardTitle: {
-    fontSize: '1.25rem',
-    color: '#451a03',
-    fontWeight: '700',
-    marginBottom: '10px',
-  },
-  cardText: {
-    color: '#78716c',
-    fontSize: '0.95rem',
-    margin: 0,
-  },
-
-  /* Testimony Section */
-  testimonySection: {
-    padding: '90px 0 100px',
-    backgroundColor: '#faf6f0',
-  },
-  testimonialCard: {
-    backgroundColor: '#ffffff',
-    border: '1px solid #ede3d6',
-    borderRadius: '14px',
-    padding: '28px',
-    display: 'flex',
-    flexDirection: 'column',
     justifyContent: 'space-between',
-    boxShadow: '0 4px 14px rgba(0, 0, 0, 0.03)',
+    gap: '24px',
+    backgroundColor: '#ffffff',
+    borderBottom: '1px solid #e8edf4',
   },
-  stars: {
-    color: '#f59e0b',
-    fontSize: '1.1rem',
-    marginBottom: '14px',
-    letterSpacing: '2px',
+  brand: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    color: '#183b56',
+    fontSize: '1.25rem',
+    fontWeight: 800,
+    textDecoration: 'none',
   },
-  testimonialQuote: {
-    color: '#44403c',
-    fontSize: '0.95rem',
-    fontStyle: 'italic',
-    marginBottom: '20px',
+  brandIcon: {
+    display: 'grid',
+    placeItems: 'center',
+    width: '34px',
+    height: '34px',
+    borderRadius: '10px',
+    backgroundColor: '#e5f4f1',
+    color: '#138a72',
   },
-  userProfile: {
+  brandAccent: { color: '#138a72' },
+  nav: { display: 'flex', gap: '28px' },
+  navLink: { color: '#64748b', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600 },
+  profile: { display: 'flex', alignItems: 'center', gap: '10px' },
+  avatar: {
+    display: 'grid',
+    placeItems: 'center',
+    width: '36px',
+    height: '36px',
+    borderRadius: '50%',
+    backgroundColor: '#dcefeb',
+    color: '#137a68',
+    fontSize: '0.8rem',
+    fontWeight: 700,
+  },
+  profileName: { fontSize: '0.9rem', fontWeight: 600 },
+  main: { maxWidth: '1180px', margin: '0 auto', padding: '42px 24px' },
+  welcome: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '20px',
+    marginBottom: '28px',
+  },
+  eyebrow: {
+    margin: '0 0 8px',
+    color: '#138a72',
+    fontSize: '0.75rem',
+    fontWeight: 800,
+    letterSpacing: '0.12em',
+  },
+  title: { margin: 0, color: '#183b56', fontSize: '2rem' },
+  subtitle: { margin: '8px 0 0', color: '#64748b' },
+  dateBadge: {
+    padding: '10px 16px',
+    border: '1px solid #dce8e7',
+    borderRadius: '999px',
+    backgroundColor: '#ffffff',
+    color: '#52716e',
+    fontSize: '0.85rem',
+  },
+  statsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
+    gap: '18px',
+    marginBottom: '22px',
+  },
+  statCard: {
+    padding: '20px',
+    border: '1px solid #e8edf4',
+    borderRadius: '14px',
+    backgroundColor: '#ffffff',
+  },
+  statIcon: { fontSize: '1.4rem' },
+  statLabel: { margin: '14px 0 5px', color: '#64748b', fontSize: '0.88rem' },
+  statValue: { margin: 0, color: '#183b56', fontSize: '1.6rem', fontWeight: 750 },
+  statNote: { color: '#64748b', fontSize: '0.85rem', fontWeight: 500 },
+  contentGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'minmax(0, 1.6fr) minmax(280px, 1fr)',
+    alignItems: 'start',
+    gap: '22px',
+  },
+  panel: {
+    padding: '24px',
+    border: '1px solid #e8edf4',
+    borderRadius: '14px',
+    backgroundColor: '#ffffff',
+  },
+  panelHeading: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: '12px',
+    marginBottom: '18px',
+  },
+  panelTitle: { margin: 0, color: '#183b56', fontSize: '1.15rem' },
+  panelSubtitle: { margin: '6px 0 0', color: '#718096', fontSize: '0.88rem' },
+  textLink: { color: '#138a72', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none' },
+  medicineList: { display: 'grid', gap: '10px' },
+  medicineRow: {
     display: 'flex',
     alignItems: 'center',
     gap: '12px',
+    padding: '14px 0',
+    borderTop: '1px solid #edf1f5',
   },
-  avatar: {
+  medicineIcon: {
+    display: 'grid',
+    placeItems: 'center',
     width: '42px',
     height: '42px',
-    borderRadius: '50%',
-    backgroundColor: '#fde68a',
-    color: '#78350f',
+    flexShrink: 0,
+    borderRadius: '12px',
+    backgroundColor: '#f0f6ff',
+  },
+  medicineInfo: { flex: 1 },
+  medicineName: { margin: 0, color: '#26384a', fontSize: '0.95rem' },
+  medicineDetail: { margin: '5px 0 0', color: '#718096', fontSize: '0.8rem' },
+  medicineTime: { color: '#475569', fontSize: '0.85rem', fontWeight: 600 },
+  status: { padding: '5px 9px', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 700 },
+  takenStatus: { backgroundColor: '#e5f5ee', color: '#18835d' },
+  upcomingStatus: { backgroundColor: '#fff5df', color: '#a66b08' },
+  assistantCard: {
+    padding: '24px',
+    borderRadius: '14px',
+    background: 'linear-gradient(145deg, #eaf7f4, #f3f8ff)',
+  },
+  assistantIcon: {
+    display: 'grid',
+    placeItems: 'center',
+    width: '40px',
+    height: '40px',
+    borderRadius: '12px',
+    backgroundColor: '#ffffff',
+    color: '#138a72',
+    fontSize: '1.3rem',
+  },
+  assistantLabel: {
+    margin: '18px 0 8px',
+    color: '#138a72',
+    fontSize: '0.7rem',
+    fontWeight: 800,
+    letterSpacing: '0.1em',
+  },
+  assistantTitle: { margin: 0, color: '#183b56', fontSize: '1.2rem' },
+  assistantText: { margin: '14px 0', color: '#334155', lineHeight: 1.5 },
+  assistantPrompt: {
+    padding: '12px',
+    borderRadius: '10px',
+    backgroundColor: 'rgba(255,255,255,0.75)',
+    color: '#526477',
+    fontSize: '0.82rem',
+    lineHeight: 1.55,
+  },
+  assistantActions: { display: 'flex', gap: '10px', marginTop: '16px' },
+  primaryButton: {
+    padding: '10px 14px',
+    border: 0,
+    borderRadius: '8px',
+    backgroundColor: '#138a72',
+    color: '#ffffff',
+    fontWeight: 700,
+    cursor: 'pointer',
+  },
+  secondaryButton: {
+    padding: '10px 14px',
+    border: '1px solid #b9d8d1',
+    borderRadius: '8px',
+    backgroundColor: '#ffffff',
+    color: '#287666',
+    fontWeight: 700,
+    cursor: 'pointer',
+  },
+  progressPanel: {
     display: 'flex',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'center',
-    fontWeight: '700',
-    fontSize: '0.9rem',
+    gap: '24px',
+    marginTop: '22px',
+    padding: '22px 24px',
+    border: '1px solid #e8edf4',
+    borderRadius: '14px',
+    backgroundColor: '#ffffff',
   },
-  userName: {
-    fontSize: '0.95rem',
-    color: '#292524',
-    fontWeight: '700',
-    margin: 0,
-  },
-  userRole: {
-    fontSize: '0.8rem',
-    color: '#a8a29e',
-    margin: 0,
-  },
+  progressTitle: { margin: 0, color: '#183b56', fontSize: '1.05rem' },
+  progressWrap: { display: 'flex', alignItems: 'center', gap: '12px', width: 'min(320px, 40%)' },
+  progressTrack: { height: '9px', flex: 1, overflow: 'hidden', borderRadius: '99px', backgroundColor: '#e8eef2' },
+  progressFill: { width: '33%', height: '100%', borderRadius: '99px', backgroundColor: '#20a486' },
+  progressPercent: { color: '#52716e', fontSize: '0.85rem', fontWeight: 700 },
+  footer: { marginTop: '24px', color: '#8190a0', fontSize: '0.78rem', textAlign: 'center' },
 };
