@@ -3,23 +3,26 @@ import styles from './button.module.css';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode;
+  variant?: 'primary' | 'secondary' | 'dark' | 'danger';
+  icon?: React.ReactNode;
 }
 
 export const Button: React.FC<ButtonProps> = ({
   children,
+  variant = 'primary',
+  icon,
   className = '',
   ...props
 }) => {
+  const variantClass = styles[`btn_${variant}`] || styles.btn_primary;
+
   return (
     <button
-      className={`${styles.animated_retro_btn} ${className}`.trim()}
+      className={`${styles.btn} ${variantClass} ${className}`.trim()}
       {...props}
     >
-      <div className={styles.animated_retro_btn_inner}>
-        <span className={styles.animated_retro_btn_content}>
-          {children}
-        </span>
-      </div>
+      {icon && <span className={styles.icon}>{icon}</span>}
+      {children && <span>{children}</span>}
     </button>
   );
 };

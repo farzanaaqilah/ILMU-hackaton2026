@@ -1,0 +1,47 @@
+.explore_button {
+  min-width: 110px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  background-color: rgb(161, 255, 20);
+  border-radius: 30px;
+  color: rgb(19, 19, 19);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.116);
+  padding: 0 16px 0 8px;
+  transition: background-color 0.5s ease, transform 0.2s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.svgIcon {
+  height: 25px;
+  width: 25px;
+  flex-shrink: 0;
+  fill: rgb(19, 19, 19);
+  transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.explore_button:hover {
+  background-color: rgb(192, 255, 20);
+}
+
+.explore_button:active {
+  transform: scale(0.97);
+}
+
+.explore_button:hover .svgIcon {
+  transform: rotate(250deg);
+}
+
+.explore_button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
