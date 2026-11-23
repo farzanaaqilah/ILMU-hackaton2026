@@ -1,338 +1,300 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../components/button';
 
-const medicines = [
-  { name: 'Vitamin D', detail: '1 tablet · After breakfast', time: '8:00 AM', status: 'Taken' },
-  { name: 'Blood pressure medicine', detail: '1 tablet · With water', time: '1:00 PM', status: 'Upcoming' },
-  { name: 'Evening medicine', detail: '1 capsule · After dinner', time: '8:00 PM', status: 'Upcoming' },
-];
-
 export const MainHome: React.FC = () => {
+  const [showAd, setShowAd] = useState(true);
+
   return (
     <div style={styles.page}>
-      <header style={styles.header}>
-        <a href="#" style={styles.brand}>
-          <span style={styles.brandIcon}>✚</span>
-          <span>Medi<span style={styles.brandAccent}>Care</span></span>
-        </a>
-        <nav style={styles.nav}>
-          <a href="#overview" style={styles.navLink}>Overview</a>
-          <a href="#medicines" style={styles.navLink}>My Medicines</a>
-          <a href="#assistant" style={styles.navLink}>AI Assistant</a>
-        </nav>
-        <div style={styles.profile}>
-          <div style={styles.avatar}>JD</div>
-          <span style={styles.profileName}>Jamie Davis</span>
-        </div>
-      </header>
+      {/* ─── 1. TOP SPONSORED / PUBLIC HEALTH AD BANNER ─── */}
+      {showAd && (
+        <aside style={styles.adBanner}>
+          <div style={styles.adBadge}>PUBLIC HEALTH ALERT & SPONSOR</div>
+          <p style={styles.adText}>
+            <strong>Community Vaccine Drive:</strong> Free flu & health screening available at partnering hospital clinics this week.
+          </p>
+          <a href="#learn-more" style={styles.adLink}>Learn More &rarr;</a>
+          <button 
+            onClick={() => setShowAd(false)} 
+            style={styles.closeAdBtn}
+            title="Dismiss ad"
+          >
+            &times;
+          </button>
+        </aside>
+      )}
 
-      <main style={styles.main}>
-        <section id="overview" style={styles.welcome}>
-          <div>
-            <p style={styles.eyebrow}>PATIENT DASHBOARD</p>
-            <h1 style={styles.title}>Good morning, Jamie 👋</h1>
-            <p style={styles.subtitle}>Here’s your medication plan for today.</p>
-          </div>
-          <div style={styles.dateBadge}>Your health, one day at a time</div>
-        </section>
+      {/* ─── 2. HERO / VALUE PROPOSITION SECTION ─── */}
+      <section style={styles.heroSection}>
+        <div style={styles.heroBadge}>🏥 Smart Healthcare & AI Surveillance</div>
+        
+        <h1 style={styles.heroTitle}>
+          MedGuardian AI, <br />
+          <span style={{ color: '#0284c7' }}>Patient Care Beyond Hospital Walls.</span>
+        </h1>
+        
+        <p style={styles.heroSubtitle}>
+          Real-time adverse medicine surveillance, automated Telegram AI companion onboarding, 
+          and seamless clinical follow-up scheduling.
+        </p>
 
-        <section style={styles.statsGrid} aria-label="Medication summary">
-          <div style={styles.statCard}>
-            <div style={styles.statIcon}>💊</div>
-            <p style={styles.statLabel}>Medicines today</p>
-            <p style={styles.statValue}>3 <span style={styles.statNote}>scheduled</span></p>
-          </div>
-          <div style={styles.statCard}>
-            <div style={styles.statIcon}>✅</div>
-            <p style={styles.statLabel}>Taken today</p>
-            <p style={styles.statValue}>1 <span style={styles.statNote}>of 3 doses</span></p>
-          </div>
-          <div style={styles.statCard}>
-            <div style={styles.statIcon}>⏰</div>
-            <p style={styles.statLabel}>Next reminder</p>
-            <p style={styles.statValue}>1:00 <span style={styles.statNote}>PM</span></p>
-          </div>
-        </section>
-
-        <div style={styles.contentGrid}>
-          <section id="medicines" style={styles.panel}>
-            <div style={styles.panelHeading}>
-              <div>
-                <h2 style={styles.panelTitle}>Today’s medications</h2>
-                <p style={styles.panelSubtitle}>Keep track of your daily doses.</p>
-              </div>
-              <a href="#medicines" style={styles.textLink}>View schedule →</a>
-            </div>
-
-            <div style={styles.medicineList}>
-              {medicines.map((medicine) => (
-                <article key={medicine.name} style={styles.medicineRow}>
-                  <div style={styles.medicineIcon}>💊</div>
-                  <div style={styles.medicineInfo}>
-                    <h3 style={styles.medicineName}>{medicine.name}</h3>
-                    <p style={styles.medicineDetail}>{medicine.detail}</p>
-                  </div>
-                  <div style={styles.medicineTime}>{medicine.time}</div>
-                  <span
-                    style={{
-                      ...styles.status,
-                      ...(medicine.status === 'Taken' ? styles.takenStatus : styles.upcomingStatus),
-                    }}
-                  >
-                    {medicine.status}
-                  </span>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <aside id="assistant" style={styles.assistantCard}>
-            <div style={styles.assistantIcon}>✦</div>
-            <p style={styles.assistantLabel}>AI MEDICATION ASSISTANT</p>
-            <h2 style={styles.assistantTitle}>A little reminder for you</h2>
-            <p style={styles.assistantText}>
-              Have you taken your blood pressure medicine today?
-            </p>
-            <div style={styles.assistantPrompt}>
-              Your next scheduled dose is at <strong>1:00 PM</strong>. Remember to follow
-              the instructions provided by your healthcare professional.
-            </div>
-            <div style={styles.assistantActions}>
-              <button type="button" style={styles.primaryButton}>Yes, I have</button>
-              <button type="button" style={styles.secondaryButton}>Not yet</button>
-            </div>
-          </aside>
+        {/* Action Buttons using your new Button component */}
+        <div style={styles.heroButtonGroup}>
+          <Link to="/auth" style={{ textDecoration: 'none' }}>
+            <Button>Hospital Portal Login</Button>
+          </Link>
+          <Link to="/patients" style={{ textDecoration: 'none' }}>
+            <Button>Register Patient (Live Demo)</Button>
+          </Link>
         </div>
 
-        <section style={styles.progressPanel}>
+        {/* Quick Highlights / Metrics Bar */}
+        <div style={styles.heroStats}>
           <div>
-            <p style={styles.eyebrow}>DAILY PROGRESS</p>
-            <h2 style={styles.progressTitle}>You’re building a healthy routine</h2>
-            <p style={styles.panelSubtitle}>You’ve completed 1 of your 3 scheduled doses today.</p>
+            <span style={styles.statNumber}>24/7</span>
+            <span style={styles.statLabel}>Telegram AI Bot</span>
           </div>
-          <div style={styles.progressWrap}>
-            <div style={styles.progressTrack}>
-              <div style={styles.progressFill} />
-            </div>
-            <span style={styles.progressPercent}>33%</span>
+          <div style={styles.statDivider} />
+          <div>
+            <span style={styles.statNumber}>Instant</span>
+            <span style={styles.statLabel}>Side-Effect Alerts</span>
           </div>
-        </section>
+          <div style={styles.statDivider} />
+          <div>
+            <span style={styles.statNumber}>1-Click</span>
+            <span style={styles.statLabel}>QR Patient Onboard</span>
+          </div>
+        </div>
+      </section>
 
-        <footer style={styles.footer}>
-          This dashboard is for medication organization and reminders. For medical advice,
-          consult your healthcare professional.
-        </footer>
-      </main>
+      {/* ─── 3. SYSTEM PILLARS / FEATURES SECTION ─── */}
+      <section style={styles.featuresSection}>
+        <div style={styles.sectionHeader}>
+          <span style={styles.sectionTag}>CORE CAPABILITIES</span>
+          <h2 style={styles.sectionTitle}>Designed for Doctors, Nurses & Patients</h2>
+          <p style={styles.sectionDesc}>
+            Connect clinical monitoring with daily patient self-reporting through AI automation.
+          </p>
+        </div>
+
+        <div style={styles.featuresGrid}>
+          <div style={styles.featureCard}>
+            <div style={styles.featureIcon}>🤖</div>
+            <h3>Telegram AI Guardian</h3>
+            <p>Scan a single QR code to link a patient to our autonomous bot for daily dosage tracking and symptom chats.</p>
+          </div>
+          
+          <div style={styles.featureCard}>
+            <div style={styles.featureIcon}>📊</div>
+            <h3>Live Safety Dashboard</h3>
+            <p>Monitors high-risk medication adverse reactions in real time with automated severity categorization.</p>
+          </div>
+
+          <div style={styles.featureCard}>
+            <div style={styles.featureIcon}>📋</div>
+            <h3>Appointment Summaries</h3>
+            <p>Intuitive card layout to review pending check-ins, medication logs, and patient consultation readiness.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── 4. BOTTOM SPONSOR DISPLAY AD CARD ─── */}
+      <section style={styles.bottomAdCard}>
+        <div style={styles.bottomAdContent}>
+          <span style={styles.bottomAdTag}>PARTNER SPONSOR</span>
+          <h3 style={{ margin: '8px 0 4px', color: '#0f172a' }}>Pharmacy Express Doorstep Delivery</h3>
+          <p style={{ margin: 0, color: '#475569', fontSize: '0.95rem' }}>
+            Instant prescription validation & cold-chain delivery for discharged hospital patients.
+          </p>
+        </div>
+        <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+          <Button>View Pharmacy Network</Button>
+        </Link>
+      </section>
     </div>
   );
 };
 
-export default MainHome;
-
+// Clean styling object matching your project's aesthetic
 const styles: Record<string, React.CSSProperties> = {
   page: {
+    fontFamily: '"Rubik", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    backgroundColor: '#f8fafc',
     minHeight: '100vh',
-    backgroundColor: '#f5f8fc',
-    color: '#1e293b',
-    fontFamily: "'Segoe UI', Roboto, Helvetica, sans-serif",
+    color: '#0f172a',
   },
-  header: {
-    minHeight: '72px',
-    padding: '0 6%',
+  /* Top Ad */
+  adBanner: {
+    backgroundColor: '#e0f2fe',
+    borderBottom: '1px solid #bae6fd',
+    padding: '10px 24px',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: '24px',
-    backgroundColor: '#ffffff',
-    borderBottom: '1px solid #e8edf4',
-  },
-  brand: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-    color: '#183b56',
-    fontSize: '1.25rem',
-    fontWeight: 800,
-    textDecoration: 'none',
-  },
-  brandIcon: {
-    display: 'grid',
-    placeItems: 'center',
-    width: '34px',
-    height: '34px',
-    borderRadius: '10px',
-    backgroundColor: '#e5f4f1',
-    color: '#138a72',
-  },
-  brandAccent: { color: '#138a72' },
-  nav: { display: 'flex', gap: '28px' },
-  navLink: { color: '#64748b', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600 },
-  profile: { display: 'flex', alignItems: 'center', gap: '10px' },
-  avatar: {
-    display: 'grid',
-    placeItems: 'center',
-    width: '36px',
-    height: '36px',
-    borderRadius: '50%',
-    backgroundColor: '#dcefeb',
-    color: '#137a68',
-    fontSize: '0.8rem',
-    fontWeight: 700,
-  },
-  profileName: { fontSize: '0.9rem', fontWeight: 600 },
-  main: { maxWidth: '1180px', margin: '0 auto', padding: '42px 24px' },
-  welcome: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: '20px',
-    marginBottom: '28px',
-  },
-  eyebrow: {
-    margin: '0 0 8px',
-    color: '#138a72',
-    fontSize: '0.75rem',
-    fontWeight: 800,
-    letterSpacing: '0.12em',
-  },
-  title: { margin: 0, color: '#183b56', fontSize: '2rem' },
-  subtitle: { margin: '8px 0 0', color: '#64748b' },
-  dateBadge: {
-    padding: '10px 16px',
-    border: '1px solid #dce8e7',
-    borderRadius: '999px',
-    backgroundColor: '#ffffff',
-    color: '#52716e',
-    fontSize: '0.85rem',
-  },
-  statsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
-    gap: '18px',
-    marginBottom: '22px',
-  },
-  statCard: {
-    padding: '20px',
-    border: '1px solid #e8edf4',
-    borderRadius: '14px',
-    backgroundColor: '#ffffff',
-  },
-  statIcon: { fontSize: '1.4rem' },
-  statLabel: { margin: '14px 0 5px', color: '#64748b', fontSize: '0.88rem' },
-  statValue: { margin: 0, color: '#183b56', fontSize: '1.6rem', fontWeight: 750 },
-  statNote: { color: '#64748b', fontSize: '0.85rem', fontWeight: 500 },
-  contentGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'minmax(0, 1.6fr) minmax(280px, 1fr)',
-    alignItems: 'start',
-    gap: '22px',
-  },
-  panel: {
-    padding: '24px',
-    border: '1px solid #e8edf4',
-    borderRadius: '14px',
-    backgroundColor: '#ffffff',
-  },
-  panelHeading: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    justifyContent: 'center',
     gap: '12px',
-    marginBottom: '18px',
+    position: 'relative',
+    fontSize: '0.9rem',
+    color: '#0369a1',
   },
-  panelTitle: { margin: 0, color: '#183b56', fontSize: '1.15rem' },
-  panelSubtitle: { margin: '6px 0 0', color: '#718096', fontSize: '0.88rem' },
-  textLink: { color: '#138a72', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none' },
-  medicineList: { display: 'grid', gap: '10px' },
-  medicineRow: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-    padding: '14px 0',
-    borderTop: '1px solid #edf1f5',
-  },
-  medicineIcon: {
-    display: 'grid',
-    placeItems: 'center',
-    width: '42px',
-    height: '42px',
-    flexShrink: 0,
-    borderRadius: '12px',
-    backgroundColor: '#f0f6ff',
-  },
-  medicineInfo: { flex: 1 },
-  medicineName: { margin: 0, color: '#26384a', fontSize: '0.95rem' },
-  medicineDetail: { margin: '5px 0 0', color: '#718096', fontSize: '0.8rem' },
-  medicineTime: { color: '#475569', fontSize: '0.85rem', fontWeight: 600 },
-  status: { padding: '5px 9px', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 700 },
-  takenStatus: { backgroundColor: '#e5f5ee', color: '#18835d' },
-  upcomingStatus: { backgroundColor: '#fff5df', color: '#a66b08' },
-  assistantCard: {
-    padding: '24px',
-    borderRadius: '14px',
-    background: 'linear-gradient(145deg, #eaf7f4, #f3f8ff)',
-  },
-  assistantIcon: {
-    display: 'grid',
-    placeItems: 'center',
-    width: '40px',
-    height: '40px',
-    borderRadius: '12px',
-    backgroundColor: '#ffffff',
-    color: '#138a72',
-    fontSize: '1.3rem',
-  },
-  assistantLabel: {
-    margin: '18px 0 8px',
-    color: '#138a72',
-    fontSize: '0.7rem',
-    fontWeight: 800,
-    letterSpacing: '0.1em',
-  },
-  assistantTitle: { margin: 0, color: '#183b56', fontSize: '1.2rem' },
-  assistantText: { margin: '14px 0', color: '#334155', lineHeight: 1.5 },
-  assistantPrompt: {
-    padding: '12px',
-    borderRadius: '10px',
-    backgroundColor: 'rgba(255,255,255,0.75)',
-    color: '#526477',
-    fontSize: '0.82rem',
-    lineHeight: 1.55,
-  },
-  assistantActions: { display: 'flex', gap: '10px', marginTop: '16px' },
-  primaryButton: {
-    padding: '10px 14px',
-    border: 0,
-    borderRadius: '8px',
-    backgroundColor: '#138a72',
+  adBadge: {
+    backgroundColor: '#0284c7',
     color: '#ffffff',
-    fontWeight: 700,
-    cursor: 'pointer',
+    fontSize: '0.75rem',
+    fontWeight: '700',
+    padding: '3px 8px',
+    borderRadius: '4px',
+    letterSpacing: '0.5px',
   },
-  secondaryButton: {
-    padding: '10px 14px',
-    border: '1px solid #b9d8d1',
-    borderRadius: '8px',
+  adText: {
+    margin: 0,
+  },
+  adLink: {
+    color: '#0369a1',
+    fontWeight: '700',
+    textDecoration: 'underline',
+  },
+  closeAdBtn: {
+    background: 'none',
+    border: 'none',
+    fontSize: '1.25rem',
+    cursor: 'pointer',
+    color: '#0369a1',
+    marginLeft: '12px',
+  },
+
+  /* Hero */
+  heroSection: {
+    textAlign: 'center',
+    padding: '60px 24px 40px',
+    maxWidth: '900px',
+    margin: '0 auto',
+  },
+  heroBadge: {
+    display: 'inline-block',
+    backgroundColor: '#e2e8f0',
+    color: '#334155',
+    padding: '6px 14px',
+    borderRadius: '9999px',
+    fontSize: '0.85rem',
+    fontWeight: '600',
+    marginBottom: '20px',
+  },
+  heroTitle: {
+    fontSize: '2.8rem',
+    fontWeight: '800',
+    lineHeight: 1.2,
+    marginBottom: '20px',
+    color: '#0f172a',
+  },
+  heroSubtitle: {
+    fontSize: '1.15rem',
+    color: '#475569',
+    marginBottom: '36px',
+    maxWidth: '680px',
+    marginInline: 'auto',
+    lineHeight: 1.6,
+  },
+  heroButtonGroup: {
+    display: 'flex',
+    gap: '16px',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    marginBottom: '48px',
+  },
+  heroStats: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '36px',
+    paddingTop: '28px',
+    borderTop: '1px solid #e2e8f0',
+  },
+  statNumber: {
+    display: 'block',
+    fontSize: '1.5rem',
+    fontWeight: '800',
+    color: '#0284c7',
+  },
+  statLabel: {
+    fontSize: '0.8rem',
+    color: '#64748b',
+    textTransform: 'uppercase',
+    fontWeight: '600',
+  },
+  statDivider: {
+    width: '1px',
+    height: '32px',
+    backgroundColor: '#cbd5e1',
+  },
+
+  /* Features */
+  featuresSection: {
+    padding: '40px 24px 60px',
+    maxWidth: '1100px',
+    margin: '0 auto',
+  },
+  sectionHeader: {
+    textAlign: 'center',
+    marginBottom: '36px',
+  },
+  sectionTag: {
+    color: '#0284c7',
+    fontSize: '0.85rem',
+    fontWeight: '700',
+    letterSpacing: '1px',
+  },
+  sectionTitle: {
+    fontSize: '2rem',
+    fontWeight: '800',
+    margin: '8px 0',
+  },
+  sectionDesc: {
+    color: '#64748b',
+    fontSize: '1rem',
+  },
+  featuresGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gap: '24px',
+  },
+  featureCard: {
     backgroundColor: '#ffffff',
-    color: '#287666',
-    fontWeight: 700,
-    cursor: 'pointer',
+    borderRadius: '16px',
+    padding: '28px 24px',
+    boxShadow: '0 4px 14px rgba(0,0,0,0.04)',
+    border: '1px solid #f1f5f9',
   },
-  progressPanel: {
+  featureIcon: {
+    fontSize: '2rem',
+    marginBottom: '12px',
+  },
+
+  /* Bottom Ad Card */
+  bottomAdCard: {
+    maxWidth: '1100px',
+    margin: '0 auto 60px',
+    backgroundColor: '#ffffff',
+    border: '2px dashed #93c5fd',
+    borderRadius: '16px',
+    padding: '24px 32px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    gap: '24px',
-    marginTop: '22px',
-    padding: '22px 24px',
-    border: '1px solid #e8edf4',
-    borderRadius: '14px',
-    backgroundColor: '#ffffff',
+    flexWrap: 'wrap',
+    gap: '16px',
   },
-  progressTitle: { margin: 0, color: '#183b56', fontSize: '1.05rem' },
-  progressWrap: { display: 'flex', alignItems: 'center', gap: '12px', width: 'min(320px, 40%)' },
-  progressTrack: { height: '9px', flex: 1, overflow: 'hidden', borderRadius: '99px', backgroundColor: '#e8eef2' },
-  progressFill: { width: '33%', height: '100%', borderRadius: '99px', backgroundColor: '#20a486' },
-  progressPercent: { color: '#52716e', fontSize: '0.85rem', fontWeight: 700 },
-  footer: { marginTop: '24px', color: '#8190a0', fontSize: '0.78rem', textAlign: 'center' },
+  bottomAdContent: {
+    flex: '1 1 300px',
+  },
+  bottomAdTag: {
+    backgroundColor: '#fef3c7',
+    color: '#b45309',
+    fontSize: '0.75rem',
+    fontWeight: '700',
+    padding: '2px 8px',
+    borderRadius: '4px',
+  },
 };
+
+export default MainHome;
