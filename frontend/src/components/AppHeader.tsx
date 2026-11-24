@@ -1,15 +1,41 @@
-import React from 'react';
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
 import Button from './button';
 
 export const AppHeader: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    return localStorage.getItem('isAuthenticated') === 'true';
+  });
+
+  const navigate = useNavigate();
   const location = useLocation();
   const isAuthPage = location.pathname === '/auth';
+
+  // Listen for login/logout changes dynamically across the app
+  useEffect(() => {
+    const handleAuthChange = () => {
+      setIsAuthenticated(localStorage.getItem('isAuthenticated') === 'true');
+    };
+
+    window.addEventListener('storage', handleAuthChange);
+    window.addEventListener('authChange', handleAuthChange);
+
+    return () => {
+      window.removeEventListener('storage', handleAuthChange);
+      window.removeEventListener('authChange', handleAuthChange);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('isAuthenticated');
+    window.dispatchEvent(new Event('authChange'));
+    navigate('/');
+  };
 
   return (
     <header style={styles.header}>
       <div style={styles.inner}>
-        {/* Brand */}
+        {/* Brand Logo */}
         <Link to="/" style={styles.brand}>
           <div style={styles.logoIcon}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -29,7 +55,7 @@ export const AppHeader: React.FC = () => {
           </div>
         </Link>
 
-        {/* Navigation links (hidden on auth page) */}
+        {/* Navigation links (Only 'Overview' for visitors; Protected links appear ONLY when authenticated) */}
         {!isAuthPage && (
           <nav style={styles.nav}>
             <NavLink 
@@ -41,46 +67,62 @@ export const AppHeader: React.FC = () => {
             >
               Overview
             </NavLink>
-            <NavLink 
-              to="/patients" 
-              style={({ isActive }) => ({
-                ...styles.link,
-                ...(isActive ? styles.activeLink : {})
-              })}
-            >
-              Patient Directory
-            </NavLink>
-            <NavLink 
-              to="/dashboard" 
-              style={({ isActive }) => ({
-                ...styles.link,
-                ...(isActive ? styles.activeLink : {})
-              })}
-            >
-              Safety Metrics
-            </NavLink>
-            <NavLink 
-              to="/appointments" 
-              style={({ isActive }) => ({
-                ...styles.link,
-                ...(isActive ? styles.activeLink : {})
-              })}
-            >
-              Appointments
-            </NavLink>
+
+            {isAuthenticated && (
+              <>
+                <NavLink 
+                  to="/patients" 
+                  style={({ isActive }) => ({
+                    ...styles.link,
+                    ...(isActive ? styles.activeLink : {})
+                  })}
+                >
+                  Patient Directory
+                </NavLink>
+                <NavLink 
+                  to="/dashboard" 
+                  style={({ isActive }) => ({
+                    ...styles.link,
+                    ...(isActive ? styles.activeLink : {})
+                  })}
+                >
+                  Safety Metrics
+                </NavLink>
+                <NavLink 
+                  to="/appointments" 
+                  style={({ isActive }) => ({
+                    ...styles.link,
+                    ...(isActive ? styles.activeLink : {})
+                  })}
+                >
+                  Appointments
+                </NavLink>
+              </>
+            )}
           </nav>
         )}
 
-        {/* Right CTA */}
+        {/* Right CTA Group */}
         <div style={styles.rightGroup}>
           <div style={styles.statusIndicator}>
             <span style={styles.pulseDot} />
             <span style={styles.statusText}>AI Bot Online</span>
           </div>
+
           {!isAuthPage && (
-            <Link to="/auth" style={{ textDecoration: 'none' }}>
-              <Button variant="secondary">Staff Portal</Button>
-            </Link>
+            isAuthenticated ? (
+              <Button 
+                variant="secondary" 
+                onClick={handleLogout}
+                style={{ borderColor: '#fca5a5', color: '#dc2626' }}
+              >
+                Logout
+              </Button>
+            ) : (
+              <Link to="/auth" style={{ textDecoration: 'none' }}>
+                <Button variant="secondary">Staff Portal</Button>
+              </Link>
+            )
           )}
         </div>
       </div>

@@ -46,14 +46,14 @@ export const MainHome: React.FC = () => {
           Eliminate post-discharge blindspots. MedGuardian AI connects physicians with patients through autonomous Telegram check-ins, early adverse drug reaction detection, and connected clinical workflows.
         </p>
 
-        {/* CTA Group */}
+        {/* Hero CTA buttons (both route unauthenticated visitors to /auth) */}
         <div style={styles.heroButtonGroup}>
-          <Link to="/patients" style={{ textDecoration: 'none' }}>
+          <Link to="/auth" style={{ textDecoration: 'none' }}>
             <Button variant="primary" style={{ padding: '12px 24px', fontSize: '0.95rem' }}>
-              Register Patient (Live Demo)
+              Register Patient (Staff Sign In)
             </Button>
           </Link>
-          <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+          <Link to="/auth" style={{ textDecoration: 'none' }}>
             <Button variant="secondary" style={{ padding: '12px 24px', fontSize: '0.95rem' }}>
               View Safety Metrics &rarr;
             </Button>
@@ -106,7 +106,7 @@ export const MainHome: React.FC = () => {
               Patients interact naturally in their preferred chat app. The AI conducts empathetic daily dosage checks, answers medication queries, and records qualitative symptom descriptions.
             </p>
             <div style={styles.featureFooterLink}>
-              <Link to="/patients" style={styles.linkAccent}>Explore Patient Intake &rarr;</Link>
+              <Link to="/auth" style={styles.linkAccent}>Explore Patient Intake &rarr;</Link>
             </div>
           </div>
 
@@ -121,7 +121,7 @@ export const MainHome: React.FC = () => {
               Symptoms flagged by the AI are triaged by clinical severity. High and critical adverse drug reactions automatically surface to hospital duty desks for immediate intervention.
             </p>
             <div style={styles.featureFooterLink}>
-              <Link to="/dashboard" style={styles.linkAccent}>Open Surveillance Grid &rarr;</Link>
+              <Link to="/auth" style={styles.linkAccent}>Open Surveillance Grid &rarr;</Link>
             </div>
           </div>
 
@@ -139,7 +139,7 @@ export const MainHome: React.FC = () => {
               Physicians access live summaries combining current pharmaceutical regimens, adherence percentages, and AI bot consultation flags before the patient walks in.
             </p>
             <div style={styles.featureFooterLink}>
-              <Link to="/appointments" style={styles.linkAccent}>View Consultation Schedule &rarr;</Link>
+              <Link to="/auth" style={styles.linkAccent}>View Consultation Schedule &rarr;</Link>
             </div>
           </div>
         </div>
@@ -187,7 +187,7 @@ export const MainHome: React.FC = () => {
             </p>
           </div>
           <div style={styles.sponsorAction}>
-            <Link to="/patients" style={{ textDecoration: 'none' }}>
+            <Link to="/auth" style={{ textDecoration: 'none' }}>
               <Button variant="dark">Explore Network</Button>
             </Link>
           </div>
@@ -209,9 +209,9 @@ export const MainHome: React.FC = () => {
             </p>
           </div>
           <div style={styles.footerNav}>
-            <Link to="/patients" style={styles.footerLink}>Patient Intake</Link>
-            <Link to="/dashboard" style={styles.footerLink}>Safety Metrics</Link>
-            <Link to="/appointments" style={styles.footerLink}>Appointments</Link>
+            <Link to="/auth" style={styles.footerLink}>Patient Intake</Link>
+            <Link to="/auth" style={styles.footerLink}>Safety Metrics</Link>
+            <Link to="/auth" style={styles.footerLink}>Appointments</Link>
             <Link to="/auth" style={styles.footerLink}>Staff Portal</Link>
           </div>
         </div>
@@ -222,6 +222,8 @@ export const MainHome: React.FC = () => {
     </div>
   );
 };
+
+export default MainHome;
 
 const styles: Record<string, React.CSSProperties> = {
   page: {
@@ -406,7 +408,6 @@ const styles: Record<string, React.CSSProperties> = {
     boxShadow: '0 2px 4px rgba(15, 23, 42, 0.03)',
     display: 'flex',
     flexDirection: 'column',
-    transition: 'all 200ms ease',
   },
   featureIconBox: {
     width: '48px',
@@ -563,5 +564,3 @@ const styles: Record<string, React.CSSProperties> = {
     textAlign: 'center',
   },
 };
-
-export default MainHome;
