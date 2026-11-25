@@ -1,11 +1,13 @@
+import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import MainHome from "./pages/MainHome";
 import AuthPage from "./pages/AuthPage";
+import AuthCallback from "./pages/AuthCallback";
 import { MetricsDashboard } from "./pages/MetricsDashboard";
 import { PatientsManagement } from "./pages/PatientsManagement";
 import { AppointmentSum } from "./pages/AppointmentSum";
 
-// Helper component to guard staff routes
+// Guard for protected staff routes
 const ProtectedRoute = ({ children }: { children: React.ReactElement }) => {
   const isAuth = localStorage.getItem("isAuthenticated") === "true";
   return isAuth ? children : <Navigate to="/auth" replace />;
@@ -18,6 +20,7 @@ function App() {
         {/* Public Routes */}
         <Route path="/" element={<MainHome />} />
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/auth/callback" element={<AuthCallback />} />
 
         {/* Protected Clinical Routes */}
         <Route

@@ -1,8 +1,43 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Eye, EyeOff } from 'lucide-react';
 import Button from '../components/button';
 import AppHeader from '../components/AppHeader';
+import { signInWithCognito } from '../auth/authService';
+
+// Zero-dependency Eye icons
+const EyeIcon: React.FC<{ size?: number; color?: string }> = ({ size = 18, color = '#64748b' }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+);
+
+const EyeOffIcon: React.FC<{ size?: number; color?: string }> = ({ size = 18, color = '#0f766e' }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+    <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+    <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+    <line x1="2" y1="2" x2="22" y2="22" />
+  </svg>
+);
 
 export const AuthPage: React.FC = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -14,7 +49,6 @@ export const AuthPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  // Password visibility states
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -36,12 +70,8 @@ export const AuthPage: React.FC = () => {
 
     setTimeout(() => {
       setIsLoading(false);
-
-      // Set authenticated state in localStorage & dispatch event to update AppHeader
       localStorage.setItem('isAuthenticated', 'true');
       window.dispatchEvent(new Event('authChange'));
-
-      // Redirect staff to dashboard
       navigate('/dashboard');
     }, 500);
   };
@@ -62,7 +92,6 @@ export const AuthPage: React.FC = () => {
     <div style={styles.container}>
       <AppHeader />
 
-      {/* Embedded CSS for responsive breakpoint handling without duplicate style objects */}
       <style>{`
         .auth-split-wrapper {
           display: grid;
@@ -72,7 +101,7 @@ export const AuthPage: React.FC = () => {
           background-color: #ffffff;
           border-radius: 24px;
           border: 1px solid #e2e8f0;
-          box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.07), 0 0 0 1px rgba(15, 23, 42, 0.02);
+          box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.07);
           overflow: hidden;
         }
 
@@ -103,33 +132,29 @@ export const AuthPage: React.FC = () => {
                 Continuous medication safety monitoring connecting hospital care with real-time patient home recovery.
               </p>
 
-              {/* Campaign / Ad Feature Cards */}
               <div style={styles.adCardsContainer}>
-                {/* Ad Card 1: 24/7 Autonomous Telegram AI Bot */}
                 <div style={styles.adCard}>
                   <div style={styles.adIconBox}>🤖</div>
                   <div>
                     <span style={styles.adCardPill}>LIVE PROTOCOL</span>
                     <h3 style={styles.adCardTitle}>24/7 Autonomous Telegram AI Bot</h3>
                     <p style={styles.adCardText}>
-                      Enables discharged patients to log daily doses, report mild-to-critical side effects, and receive triage support with zero mobile app installation.
+                      Enables discharged patients to log daily doses, report mild-to-critical side effects, and receive triage support.
                     </p>
                   </div>
                 </div>
 
-                {/* Ad Card 2: Health Campaign Notice */}
                 <div style={styles.adCard}>
                   <div style={styles.adIconBox}>🛡️</div>
                   <div>
                     <span style={styles.adCardPill}>CLINICAL NOTICE</span>
                     <h3 style={styles.adCardTitle}>Early Reaction Interception</h3>
                     <p style={styles.adCardText}>
-                      Real-time algorithm classifies incoming symptoms by risk severity, alerting attending physicians to dangerous drug-drug interactions within 2 seconds.
+                      Real-time algorithm classifies incoming symptoms by risk severity, alerting attending physicians within 2 seconds.
                     </p>
                   </div>
                 </div>
 
-                {/* Ad Card 3: Sponsored Pharmacy Network */}
                 <div style={styles.adCardHighlight}>
                   <div style={styles.sponsorTopRow}>
                     <span style={styles.sponsorTag}>SPONSORED HEALTHCARE PARTNER</span>
@@ -162,6 +187,24 @@ export const AuthPage: React.FC = () => {
                     ? 'Register credentials to access patient telemetry and telemetry records'
                     : 'Sign in to monitor adverse reaction telemetry and patient check-ins'}
                 </p>
+              </div>
+
+              {/* AWS Cognito One-Click SSO Button */}
+              <button
+                type="button"
+                onClick={() => signInWithCognito()}
+                style={styles.cognitoBtn}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ marginRight: '10px' }}>
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#0f766e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Sign In with AWS Cognito SSO
+              </button>
+
+              <div style={styles.dividerRow}>
+                <div style={styles.dividerLine} />
+                <span style={styles.dividerText}>OR SIGN IN WITH WORK EMAIL</span>
+                <div style={styles.dividerLine} />
               </div>
 
               {/* Mode Switcher */}
@@ -198,7 +241,6 @@ export const AuthPage: React.FC = () => {
               <form onSubmit={handleAuth} style={styles.form}>
                 {isSignUp && (
                   <>
-                    {/* Row 1: Full Name & Medical ID */}
                     <div style={styles.formRow}>
                       <div style={styles.inputGroup}>
                         <label style={styles.label}>Full Name *</label>
@@ -224,7 +266,6 @@ export const AuthPage: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Row 2: Role & Department */}
                     <div style={styles.formRow}>
                       <div style={styles.inputGroup}>
                         <label style={styles.label}>Role *</label>
@@ -254,7 +295,6 @@ export const AuthPage: React.FC = () => {
                   </>
                 )}
 
-                {/* Work Email Address */}
                 <div style={styles.inputGroup}>
                   <label style={styles.label}>Work Email Address *</label>
                   <input
@@ -267,7 +307,6 @@ export const AuthPage: React.FC = () => {
                   />
                 </div>
 
-                {/* Password / Confirm Password Rows */}
                 {isSignUp ? (
                   <div style={styles.formRow}>
                     <div style={styles.inputGroup}>
@@ -286,13 +325,8 @@ export const AuthPage: React.FC = () => {
                           onClick={() => setShowPassword(!showPassword)}
                           style={styles.eyeBtn}
                           title={showPassword ? 'Hide password' : 'Show password'}
-                          aria-label={showPassword ? 'Hide password' : 'Show password'}
                         >
-                          {showPassword ? (
-                            <EyeOff size={18} color="#0f766e" />
-                          ) : (
-                            <Eye size={18} color="#64748b" />
-                          )}
+                          {showPassword ? <EyeOffIcon size={18} color="#0f766e" /> : <EyeIcon size={18} color="#64748b" />}
                         </button>
                       </div>
                     </div>
@@ -313,13 +347,8 @@ export const AuthPage: React.FC = () => {
                           onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                           style={styles.eyeBtn}
                           title={showConfirmPassword ? 'Hide password' : 'Show password'}
-                          aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
                         >
-                          {showConfirmPassword ? (
-                            <EyeOff size={18} color="#0f766e" />
-                          ) : (
-                            <Eye size={18} color="#64748b" />
-                          )}
+                          {showConfirmPassword ? <EyeOffIcon size={18} color="#0f766e" /> : <EyeIcon size={18} color="#64748b" />}
                         </button>
                       </div>
                     </div>
@@ -341,13 +370,8 @@ export const AuthPage: React.FC = () => {
                         onClick={() => setShowPassword(!showPassword)}
                         style={styles.eyeBtn}
                         title={showPassword ? 'Hide password' : 'Show password'}
-                        aria-label={showPassword ? 'Hide password' : 'Show password'}
                       >
-                        {showPassword ? (
-                          <EyeOff size={18} color="#0f766e" />
-                        ) : (
-                          <Eye size={18} color="#64748b" />
-                        )}
+                        {showPassword ? <EyeOffIcon size={18} color="#0f766e" /> : <EyeIcon size={18} color="#64748b" />}
                       </button>
                     </div>
                   </div>
@@ -369,7 +393,6 @@ export const AuthPage: React.FC = () => {
                 </div>
               </form>
 
-              {/* Demo Fast-Fill Box */}
               {!isSignUp && (
                 <div style={styles.demoBar}>
                   <span style={styles.demoTitle}>Demo One-Click:</span>
@@ -421,8 +444,6 @@ const styles: Record<string, React.CSSProperties> = {
     justifyContent: 'center',
     padding: '36px 20px',
   },
-
-  /* Left Panel (42% Desktop) */
   leftPanel: {
     background: 'linear-gradient(155deg, #0f766e 0%, #115e59 50%, #134e4a 100%)',
     color: '#ffffff',
@@ -567,8 +588,6 @@ const styles: Record<string, React.CSSProperties> = {
     alignItems: 'center',
     marginTop: '28px',
   },
-
-  /* Right Panel (58% Desktop) */
   rightPanel: {
     padding: '44px 40px',
     display: 'flex',
@@ -583,7 +602,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   header: {
     textAlign: 'left',
-    marginBottom: '20px',
+    marginBottom: '16px',
   },
   badge: {
     fontSize: '0.68rem',
@@ -609,6 +628,39 @@ const styles: Record<string, React.CSSProperties> = {
     color: '#64748b',
     margin: 0,
     lineHeight: 1.45,
+  },
+  cognitoBtn: {
+    width: '100%',
+    padding: '11px',
+    borderRadius: '9px',
+    border: '1.5px solid #0f766e',
+    backgroundColor: '#f0fdfa',
+    color: '#0f766e',
+    fontWeight: '700',
+    fontSize: '0.88rem',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: '0 1px 2px rgba(15, 118, 110, 0.08)',
+    transition: 'all 150ms ease',
+  },
+  dividerRow: {
+    display: 'flex',
+    alignItems: 'center',
+    margin: '18px 0',
+    gap: '12px',
+  },
+  dividerLine: {
+    flex: 1,
+    height: '1px',
+    backgroundColor: '#e2e8f0',
+  },
+  dividerText: {
+    fontSize: '0.68rem',
+    fontWeight: '700',
+    color: '#94a3b8',
+    letterSpacing: '0.06em',
   },
   tabContainer: {
     display: 'flex',
@@ -694,8 +746,6 @@ const styles: Record<string, React.CSSProperties> = {
     width: '100%',
     boxSizing: 'border-box',
   },
-
-  /* Password wrapper & eye icon button */
   passwordWrapper: {
     position: 'relative',
     display: 'flex',
@@ -727,7 +777,6 @@ const styles: Record<string, React.CSSProperties> = {
     padding: '4px',
     outline: 'none',
   },
-
   rowBetween: {
     display: 'flex',
     justifyContent: 'space-between',
